@@ -1,1 +1,1 @@
-# moogo-ui
+# gonotify-ui
