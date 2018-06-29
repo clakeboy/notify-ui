@@ -16,34 +16,7 @@ let react = path.resolve(node_modules, 'react/dict/react.js');
 
 export default {
     //页面入口文件配置
-    entry: {
-        //主文件
-        index : './src/index.jsx'
-    },
     mode: 'production',
-    //插件项
-    plugins: [
-        new MiniCssExtractPlugin({
-            filename: "[name].css"
-        }),
-        new webpack.DefinePlugin({
-            "process.env": {
-                NODE_ENV: JSON.stringify("production")
-            }
-        })
-    ],
-    optimization: {
-        splitChunks: {
-            cacheGroups: {
-                commons: {
-                    name: "common",
-                    chunks: "initial",
-                    minChunks: 2
-                }
-            }
-        },
-        minimize:true
-    },
     output: {
         path: `${__dirname}/dist`,
         filename: '[name].js',
@@ -51,14 +24,6 @@ export default {
     },
     module: {
         rules: [
-            {
-                test: /\.css$/,
-                use: [MiniCssExtractPlugin.loader,'style-loader','css-loader']
-            },
-            {
-                test: /\.less$/,
-                use: [MiniCssExtractPlugin.loader,'css-loader','less-loader']
-            },
             { test: /\.woff[2]?$/, use: "url-loader?limit=10000&mimetype=application/font-woff" },
             { test: /\.ttf$/,  use: "url-loader?limit=10000&mimetype=application/octet-stream" },
             { test: /\.eot$/,  use: "file-loader" },
@@ -70,7 +35,7 @@ export default {
             },
             {
                 test: /\.js$/,
-                use: 'babel-loader',
+                use: {loader:'babel-loader',query:{presets:['es2015', 'stage-0', 'react']}},
                 exclude: /node_modules/
             },
             {
@@ -82,11 +47,6 @@ export default {
     //其它解决方案配置
     resolve: {
         extensions: [ '.js', '.json', '.less', '.jsx']
-        // ,alias: {
-        //     AppStore : 'js/stores/AppStores.js',
-        //     ActionType : 'js/actions/ActionType.js',
-        //     AppAction : 'js/actions/AppAction.js'
-        // }
     },
     node: {
         fs: 'empty'
@@ -97,7 +57,7 @@ export default {
         "react-dom": "ReactDOM",
         "zepto": "Zepto",
         "marked":"Marked",
-        // "moment":"Moment",
+        "moment":"Moment",
         "@clake/react-bootstrap4":"ReactBootstrapV4"
     }
 };

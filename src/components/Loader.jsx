@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import PropTypes from "prop-types";
-import {Load} from '../../src/index';
+import {Load} from '@clake/react-bootstrap4';
 
 export default class Loader extends React.Component {
     constructor(prop) {
@@ -30,7 +30,8 @@ export default class Loader extends React.Component {
     }
 
     loadComponent(loadPath) {
-        this.props.import(loadPath).then(component=>{
+        let filePath = this.explainUrl(loadPath);
+        this.props.import(filePath).then(component=>{
             if (typeof component === "string") {
                 console.log(component);
                 this.setState({
@@ -42,6 +43,32 @@ export default class Loader extends React.Component {
                 });
             }
         });
+    }
+
+    ucFirst(str) {
+        let first = str[0].toUpperCase();
+        return first+str.substr(1);
+    }
+
+    under2hump(str) {
+        let arr = str.split('_');
+        let hump = arr.map((item)=>{
+            return this.ucFirst(item);
+        });
+        return hump.join('');
+    }
+
+    explainUrl(path) {
+        let arr = path.split('/');
+        arr.shift();
+        let module = arr.pop();
+        if (module === "") {
+            module = 'Main';
+        } else {
+            module = this.under2hump(module)
+        }
+        let ext_path = arr.length > 0 ? '/' : '';
+        return ext_path + arr.join('/') + "/" + module;
     }
 
     render() {

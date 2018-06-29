@@ -20,6 +20,34 @@ export default merge(cfg,{
             }
         })
     ],
+    module: {
+        rules: [
+            {
+                test: /\.css$/,
+                use: ['style-loader','css-loader']
+            },
+            {
+                test: /\.less$/,
+                use: ['style-loader','css-loader','less-loader']
+            }
+        ]
+    },
+    // optimization: {
+    //     splitChunks: {
+    //         minSize: 30000,
+    //         minChunks: 1,
+    //         cacheGroups: {
+    //             commons: {
+    //                 name: "common",
+    //                 chunks: "initial"
+    //             }
+    //         }
+    //     },
+    //     minimize:true,
+    //     runtimeChunk: {
+    //         name: 'manifest'
+    //     }
+    // },
     mode: 'development',
     devtool: 'eval-source-map',
 });

@@ -1,7 +1,7 @@
 {
-  "name": "moogo-ui",
+  "name": "notify-ui",
   "version": "1.0.0",
-  "description": "mongodb gui control",
+  "description": "gonotify gui",
   "main": "index.js",
   "scripts": {
     "test": "test",
@@ -14,19 +14,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/clakeboy/moogo-ui.git"
+    "url": "git+https://github.com/clakeboy/notify-ui.git"
   },
   "keywords": [
-    "moogo",
-    "ui",
-    "mongodb"
+    "gonotify",
+    "ui"
   ],
   "author": "clake",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/clakeboy/moogo-ui/issues"
+    "url": "https://github.com/clakeboy/notify-ui/issues"
   },
-  "homepage": "https://github.com/clakeboy/moogo-ui#readme",
+  "homepage": "https://github.com/clakeboy/notify-ui#readme",
   "devDependencies": {
     "@clake/react-bootstrap4": "^0.1.0",
     "babel": "^6.23.0",
@@ -47,11 +46,12 @@
     "gulp-header": "^1.8.9",
     "gulp-load-plugins": "^1.5.0",
     "gulp-util": "^3.0.8",
-    "less": "^2.7.3",
-    "less-loader": "^4.0.5",
+    "less": "^3.0.4",
+    "less-loader": "^4.1.0",
     "mini-css-extract-plugin": "^0.4.0",
     "path": "^0.12.7",
     "process": "^0.11.10",
+    "prop-types": "^15.6.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-router": "^4.2.0",

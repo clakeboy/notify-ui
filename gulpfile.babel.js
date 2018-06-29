@@ -62,8 +62,8 @@ gulp.task('server', () => {
     });
 });
 
-gulp.task('clean', () => {
-    return del([
+gulp.task('clean', (callback) => {
+    del([
         'dist/*',
         '!dist/vendor',
         '!dist/index.html',
@@ -71,10 +71,11 @@ gulp.task('clean', () => {
         '!dist/static',
         '!dist/favicon.ico'
     ]);
+    callback();
 });
 
 gulp.task('build:pack', (callback)=>{
-    let webpackConfig = require('./webpack.common').default;
+    let webpackConfig = require('./webpack.prod').default;
 // return gulp.src('dist/*.js')
 //     .pipe(replaceVersion())
 //     .pipe(addBanner())

@@ -3,8 +3,9 @@
  */
 import {render} from 'react-dom';
 
-import './assets/css/main.less';
-
 import routers from './routers';
 
 render(routers,document.getElementById('react-main'));
+if (module.hot) {
+    module.hot.accept();
+}

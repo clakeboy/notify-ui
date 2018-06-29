@@ -4,6 +4,9 @@
 import React from 'react';
 import {GetComponent} from "../common/Funcs";
 import Loader from './Loader';
+import '../assets/css/main.less';
+import Header from "./Header";
+import LeftMenu from "./LeftMenu";
 
 export default class App extends React.Component {
     constructor(props) {
@@ -14,39 +17,19 @@ export default class App extends React.Component {
 
     }
 
-    ucFirst(str) {
-        let first = str[0].toUpperCase();
-        return first+str.substr(1);
-    }
-
-    under2hump(str) {
-        let arr = str.split('_');
-        let hump = arr.map((item)=>{
-            return this.ucFirst(item);
-        });
-        return hump.join('');
-    }
-
-    explainUrl(path) {
-        let arr = path.split('/');
-        arr.shift();
-        let module = arr.pop();
-        if (module === "") {
-            module = 'Main';
-        } else {
-            module = this.under2hump(module)
-        }
-
-        return arr.join('/') + "/" + module;
-    }
-
     render() {
-        let load_path = this.explainUrl(this.props.location.pathname);
         return (
-            <div>
-                <div>头是这样</div>
-                <Loader loadPath={load_path} import={GetComponent} {...this.props}/>
+            <div className='ck-main'>
+                <Header/>
+                <div className='ck-left'>
+                    <LeftMenu/>
+                </div>
+                <div className='ck-content'>
+                    <div className='ck-content-router'>
+                        <Loader loadPath={this.props.location.pathname} import={GetComponent} {...this.props}/>
+                    </div>
+                </div>
             </div>
-        );
+        )
     }
 }
