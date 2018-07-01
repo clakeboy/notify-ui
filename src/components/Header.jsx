@@ -11,11 +11,26 @@ import {
 class Header extends React.PureComponent {
     constructor(props) {
         super(props);
+        this.state = {
+            title:this.props.title
+        }
     }
 
     componentDidMount() {
 
     }
+
+    componentWillReceiveProps(nextProp) {
+        if (this.state.title !== nextProp.title) {
+            this.setState({
+                title: nextProp.title
+            });
+        }
+    }
+
+    logout = () => {
+        this.props.setLogin(null,false);
+    };
 
     getClasses() {
         let base = 'navbar navbar-expand fixed-top ck-top-header';
@@ -34,19 +49,20 @@ class Header extends React.PureComponent {
                 </div>
                 <div className='ck-header-right'>
                     <div className='page-title'>
-                        首页
+                        {this.state.title}
                     </div>
                     <ul className="nav navbar-nav float-right user-nav">
                         <li className="nav-item dropdown">
                             <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" className="nav-link dropdown-toggle">
                                 <img src="http://img.tubaozhang.com/static/images/default_head.jpg" alt="Avatar"/>
-                                <span className="user-name">管理员</span>
+                                <span className="user-name">{this.props.user.user_name}</span>
                             </a>
                             <div role="menu" className="dropdown-menu">
                                 <div className="user-info">
-                                    <div className="user-name">管理员</div>
+                                    <div className="user-name">{this.props.user.user_name}</div>
+                                    <div className="user-level">{this.props.user.level_name}</div>
                                 </div>
-                                <a href="#" className="dropdown-item">
+                                <a href="#" className="dropdown-item" onClick={this.logout}>
                                     <Icon icon='power-off'/> 退出登录</a>
                             </div>
                         </li>

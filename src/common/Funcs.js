@@ -15,3 +15,4 @@ export function GetModal(path) {
         return 'An error occurred while loading the component '+error
     });
 }
+
