@@ -26,13 +26,13 @@ class LeftMenu extends React.PureComponent {
                         key:'user_manage',
                         text:'后台用户管理',
                         icon:'home',
-                        link:'/'
+                        link:'/system/account'
                     },
                     {
                         key:'menu_manage',
                         text:'后台菜单管理',
                         icon:'home',
-                        link:'/'
+                        link:'/system/menu'
                     }
                 ]
             },

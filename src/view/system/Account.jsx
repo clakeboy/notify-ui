@@ -1,9 +1,7 @@
 /**
- * Created by clakeboy on 2018/6/29.
+ * Created by clakeboy on 2018/7/4.
  */
 import React from 'react';
-import moment from 'moment';
-import {Link} from 'react-router-dom';
 import {
     Card,
     Input,
@@ -18,7 +16,7 @@ import PropTypes from "prop-types";
 import {GetComponent} from "../../common/Funcs";
 import Loader from "../../components/Loader";
 
-class Manage extends React.PureComponent {
+class Account extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -33,12 +31,16 @@ class Manage extends React.PureComponent {
     }
 
     componentDidMount() {
-        this.loadTask(1);
+        this.loadUsers(1)
     }
 
-    loadTask(page) {
+    /**
+     * 加载用户列表
+     * @param page
+     */
+    loadUsers(page) {
         this.modal.loading("加载中...");
-        Fetch("/serv/task/query",{page:page,number:this.pageNumber,task_name:this.task_name.getValue()},(res)=>{
+        Fetch("/serv/account/query",{page:page,number:this.pageNumber,account:this.account.getValue()},(res)=>{
             if (res.status) {
                 this.setState({
                     data:res.data.list,
@@ -55,44 +57,23 @@ class Manage extends React.PureComponent {
         });
     }
 
+    /**
+     * 打开一个用户信息
+     * @param id
+     */
     openEdit(id) {
         this.modal.view({
-            title:id?'修改通知任务信息':'添加通知任务',
-            content:<Loader loadPath='/task/edit_task'
+            title:id?'修改后台帐户信息':'添加后台帐户',
+            content:<Loader loadPath='/system/edit_account'
                             import={GetComponent}
-                            taskId={id}
+                            userId={id}
                             callback={(res)=>{
                                 console.log(res);
                                 this.modal.close();
-                                this.loadTask(1);
+                                this.loadUsers(1);
                             }}/>
         });
         // this.context.router.history.push('/task/edit_task')
-    }
-
-    delete(row) {
-        this.modal.confirm({
-            content:`确定要删除这个任务项?\n[${row.task_name}]`,
-            callback:(ok)=>{
-                if (ok) {
-                    this.modal.loading('删除数据中...');
-                    Fetch('/serv/task/delete',{id:row.id},(res)=>{
-                        if (res.status) {
-                            this.modal.alert({
-                                content:'删除数据成功!',
-                                callback:()=>{
-                                    this.loadTask(this.state.currentPage);
-                                }
-                            });
-                        } else {
-                            this.modal.alert('删除数据失败! '+res.msg);
-                        }
-                    },(e)=>{
-                        this.modal.alert(e);
-                    })
-                }
-            }
-        });
     }
 
     render() {
@@ -100,35 +81,30 @@ class Manage extends React.PureComponent {
             <div className='ck-container'>
                 <Card>
                     <div className='form-inline'>
-                        <Input ref={c=>this.task_name=c} className='mr-1' placeholder='任务名称'/>
+                        <Input ref={c=>this.account=c} className='mr-1' placeholder='帐户名'/>
                         <Button icon='search' onClick={()=>{
-                            this.loadTask(1)
+                            this.loadUsers(1)
                         }}>搜索</Button>
                     </div>
                     <hr/>
                     <div className='mb-1'>
-                        <Button className='mr-1' icon='sync-alt' onClick={e=>this.loadTask(this.state.currentPage)}>刷新</Button>
-                        <Button className='float-right' icon='plus' theme='success' onClick={e=>this.openEdit()}>添加任务</Button>
+                        <Button className='mr-1' icon='sync-alt' onClick={e=>this.loadUsers(this.state.currentPage)}>刷新</Button>
+                        <Button className='float-right' icon='plus' theme='success' onClick={e=>this.openEdit()}>添加帐号</Button>
                     </div>
                     <Table hover={true} select={true} headerTheme='light' data={this.state.data}>
-                        <Table.Header text='任务ID' field='id'/>
-                        <Table.Header text='任务名称' field='task_name' onFormat={(val,row)=>{
+                        <Table.Header text='帐户ID' field='id'/>
+                        <Table.Header text='帐户名' field='account' onFormat={(val,row)=>{
                             return (
                                 <React.Fragment>
                                     {row.disable?
-                                        <span className='badge badge-danger'>禁用</span>:
-                                        <span className='badge badge-success'>启用</span>}
-                                    <Link className='ml-1' to={`/task/log?task_id=${row.id}`}>{val}</Link>
+                                        <span className='badge badge-danger mr-1'>禁用</span>:
+                                        <span className='badge badge-success mr-1'>启用</span>}
+                                    {val}
                                 </React.Fragment>
                             )
                         }}/>
-                        <Table.Header text='时间规则' field='time_rule'/>
-                        <Table.Header text='通知方式' field='notify_method'/>
-                        <Table.Header text='执行一次' field='once' onFormat={val=>{
-                            return val? <span className="badge badge-success">是</span>:'否';
-                        }}/>
-                        <Table.Header text='通知次数' field='notify_number'/>
-                        <Table.Header text='已通知次数' field='notified_number'/>
+                        <Table.Header text='姓名' field='user_name'/>
+                        <Table.Header text='密码' field='password'/>
                         <Table.Header text='创建时间' field='created_date' onFormat={value=>{
                             return moment.unix(value).format("YYYY-MM-DD hh:mm:ss");
                         }}/>
@@ -147,7 +123,7 @@ class Manage extends React.PureComponent {
                     </Table>
                     <Pagination count={this.state.count} current={this.state.currentPage}
                                 number={this.pageNumber} showPage={10}
-                                onSelect={page=>this.loadTask(page)}/>
+                                onSelect={page=>this.loadUsers(page)}/>
                 </Card>
                 <Modal ref={c=>this.modal=c}/>
             </div>
@@ -155,16 +131,12 @@ class Manage extends React.PureComponent {
     }
 }
 
-Manage.propTypes = {
+Account.propTypes = {
 
 };
 
-Manage.defaultProps = {
+Account.defaultProps = {
 
 };
 
-Manage.contextTypes = {
-    router: PropTypes.object
-};
-
-export default Manage;
+export default Account;

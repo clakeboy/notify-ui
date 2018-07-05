@@ -2,12 +2,12 @@
  * Created by clakeboy on 2018/6/28.
  */
 import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import '../assets/css/header.less';
 import {
     Icon
 } from '@clake/react-bootstrap4';
+import Fetch from "../common/Fetch";
 class Header extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -29,7 +29,11 @@ class Header extends React.PureComponent {
     }
 
     logout = () => {
-        this.props.setLogin(null,false);
+        Fetch('/serv/login/logout',{},(res)=>{
+             if (res) {
+                 this.props.setLogin(null,false);
+             }
+        });
     };
 
     getClasses() {
@@ -54,13 +58,13 @@ class Header extends React.PureComponent {
                     <ul className="nav navbar-nav float-right user-nav">
                         <li className="nav-item dropdown">
                             <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" className="nav-link dropdown-toggle">
-                                <img src="http://img.tubaozhang.com/static/images/default_head.jpg" alt="Avatar"/>
-                                <span className="user-name">{this.props.user.user_name}</span>
+                                <img src="http://img.tubaozhang.com/static/images/head/head_64_11.png" alt="Avatar"/>
+                                <span className="user-name">{this.props.user.account}</span>
                             </a>
                             <div role="menu" className="dropdown-menu">
                                 <div className="user-info">
-                                    <div className="user-name">{this.props.user.user_name}</div>
-                                    <div className="user-level">{this.props.user.level_name}</div>
+                                    <div className="user-name">{this.props.user.account}</div>
+                                    <div className="user-level">{this.props.user.user_name}</div>
                                 </div>
                                 <a href="#" className="dropdown-item" onClick={this.logout}>
                                     <Icon icon='power-off'/> 退出登录</a>

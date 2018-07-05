@@ -2,7 +2,7 @@
  * Created by clakeboy on 2017/12/3.
  */
 import React from 'react';
-import {GetComponent} from "../common/Funcs";
+import {GetComponent,GetQuery} from "../common/Funcs";
 import Loader from './Loader';
 import '../assets/css/main.less';
 import Header from "./Header";
@@ -13,13 +13,13 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            login:true,
+            login:false,
             title:'',
         };
-        this.user = {
-            user_name:'Admin',
-            level_name:'管理员'
-        };
+        // this.user = {
+        //     account:'Clake',
+        //     user_name:'管理员'
+        // }
     }
 
     componentDidMount() {
@@ -52,7 +52,7 @@ export default class App extends React.Component {
                 </div>
                 <div className='ck-content'>
                     <div className='ck-content-router'>
-                        <Loader loadPath={this.props.location.pathname} import={GetComponent} setTitle={this.setTitle} user={this.user} {...this.props}/>
+                        <Loader loadPath={this.props.location.pathname} query={GetQuery(this.props.location.search)} import={GetComponent} setTitle={this.setTitle} user={this.user} {...this.props}/>
                     </div>
                 </div>
             </div>

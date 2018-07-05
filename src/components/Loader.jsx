@@ -22,7 +22,8 @@ export default class Loader extends React.Component {
         if (this.props.loadPath !== nextProp.loadPath) {
             this.setState({
                 instance:null,
-                noFound:false
+                noFound:false,
+                load_error:''
             },()=>{
                 this.loadComponent(nextProp.loadPath);
             });
@@ -35,7 +36,8 @@ export default class Loader extends React.Component {
             if (typeof component === "string") {
                 console.log(component);
                 this.setState({
-                    noFound:true
+                    noFound:true,
+                    load_error:component
                 });
             } else {
                 this.setState({
@@ -76,8 +78,8 @@ export default class Loader extends React.Component {
             return this.renderComponent()
         } else {
             return (
-                <div className='text-center text-primary mt-5'>
-                    {this.state.noFound?'没有找到模块':<Load>模块加载中</Load>}
+                <div className='text-center text-danger mt-5 mb-5'>
+                    {this.state.noFound?<div>没有找到模块<br/>{this.state.load_error}</div>:<Load>模块加载中</Load>}
                 </div>
             );
         }
