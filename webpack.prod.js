@@ -34,7 +34,7 @@ export default merge(cfg,{
     optimization: {
         splitChunks: {
             minSize: 30000,
-            minChunks: 1,
+            minChunks: 2,
             cacheGroups: {
                 commons: {
                     name: "common",

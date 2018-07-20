@@ -9,6 +9,7 @@ import {
     TextArea,
     Checkbox,
     Modal,
+    InputGroup
 } from '@clake/react-bootstrap4';
 import Fetch from "../../common/Fetch";
 import PropTypes from "prop-types";
@@ -24,7 +25,8 @@ class EditTask extends React.PureComponent {
                 notify_method:'GET',
                 notify_url:'',
                 notify_data:''
-            }
+            },
+            number_disabled:true
         };
 
         this.methodList = [
@@ -54,13 +56,15 @@ class EditTask extends React.PureComponent {
                     notify_method:'GET',
                     notify_url:'',
                     notify_data:'',
+                    notify_number:0,
                     time_rule_sec:'0',
                     time_rule_min:'*',
                     time_rule_hor:'*',
                     time_rule_day:'*',
                     time_rule_mon:'*',
                     time_rule_wek:'*',
-                }
+                },
+                number_disabled:true
             });
         }
     }
@@ -77,7 +81,8 @@ class EditTask extends React.PureComponent {
                 res.data.time_rule_mon = time_rule[4];
                 res.data.time_rule_wek = time_rule[5];
                 this.setState({
-                    data:res.data
+                    data:res.data,
+                    number_disabled:!res.data.once
                 },()=>{
                     this.modal.close();
                 })
@@ -114,7 +119,7 @@ class EditTask extends React.PureComponent {
         time_rule.push(this.state.data.time_rule_mon);
         time_rule.push(this.state.data.time_rule_wek);
         this.state.data.time_rule = time_rule.join(" ");
-
+        this.state.data.notify_number = parseInt(this.state.data.notify_number);
         Fetch(remote_url,this.state.data,(res)=>{
             if (res.status) {
                 this.modal.alert({
@@ -157,25 +162,35 @@ class EditTask extends React.PureComponent {
                             value={this.state.data.notify_method}/>
                     <Input className='col-10' label='通知地址' placeholder='URL 地址' data={this.state.data.notify_url} onChange={this.changeHandler('notify_url')}/>
                 </div>
-                <div className='form-group form-row'>
-                    <Checkbox className='ml-1 mr-5' label='通知一次' onChange={e=>{
-                        let data = this.state.data;
-                        data['once'] = e.target.checked;
-                        this.setState({
-                            data:data
-                        })
-                    }} checked={this.state.data.once}/>
-                    <Checkbox className='text-danger' label='禁用' onChange={e=>{
-                        let data = this.state.data;
-                        data['disable'] = e.target.checked;
-                        this.setState({
-                            data:data
-                        })
-                    }} checked={this.state.data.disable}/>
+                <div className='form-row form-group'>
+                    <div className='col-2 d-flex align-items-center'>
+                        <Checkbox label='通知一次' onChange={e=>{
+                            let data = this.state.data;
+                            data['once'] = e.target.checked;
+                            this.setState({
+                                data:data,
+                                number_disabled:!e.target.checked
+                            })
+                        }} checked={this.state.data.once}/>
+                    </div>
+                    <div className='col-10'>
+                        <InputGroup className='ck-clear-m' label='重送次数' type='number' onChange={this.changeHandler('notify_number')} disabled={this.state.number_disabled} data={this.state.data.notify_number} placeholder='失败重送次数'/>
+                    </div>
                 </div>
                 <TextArea label='通知数据 (JSON字符串)' data={this.state.data.notify_data} onChange={this.changeHandler('notify_data')} rows={5}/>
-                <div>
-                    <Button className='float-right' icon='save' onClick={()=>this.save()}>保存</Button>
+                <div className='form-row'>
+                    <div className='col-6'>
+                        <Checkbox className='text-danger' label='禁用' onChange={e=>{
+                            let data = this.state.data;
+                            data['disable'] = e.target.checked;
+                            this.setState({
+                                data:data
+                            })
+                        }} checked={this.state.data.disable}/>
+                    </div>
+                    <div className='col-6'>
+                        <Button className='float-right' icon='save' onClick={()=>this.save()}>保存</Button>
+                    </div>
                 </div>
                 <Modal ref={c=>this.modal=c}/>
             </div>

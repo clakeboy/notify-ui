@@ -8,11 +8,14 @@ import {
     Icon
 } from '@clake/react-bootstrap4';
 import Fetch from "../common/Fetch";
+import PropTypes from "prop-types";
+import LeftMenu from "./LeftMenu";
 class Header extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            title:this.props.title
+            title:this.props.title,
+            back:false
         }
     }
 
@@ -22,8 +25,13 @@ class Header extends React.PureComponent {
 
     componentWillReceiveProps(nextProp) {
         if (this.state.title !== nextProp.title) {
+            let is_back = false;
+            if (this.context.router.history.action === 'PUSH') {
+                is_back = true;
+            }
             this.setState({
-                title: nextProp.title
+                title: nextProp.title,
+                back:is_back
             });
         }
     }
@@ -52,6 +60,11 @@ class Header extends React.PureComponent {
                     </div>
                 </div>
                 <div className='ck-header-right'>
+                    {this.state.back?<div onClick={()=>{
+                        this.context.router.history.goBack();
+                    }} className='page-title back'>
+                        <Icon icon='angle-left'/>
+                        </div>:null}
                     <div className='page-title'>
                         {this.state.title}
                     </div>
@@ -85,4 +98,7 @@ Header.defaultProps = {
 
 };
 
+Header.contextTypes = {
+    router: PropTypes.object
+};
 export default Header;

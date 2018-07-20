@@ -44,7 +44,7 @@ class Log extends React.PureComponent {
                     data:res.data.list,
                     currentPage:page,
                     count:res.data.count,
-                    task_id:id,
+                    task_id:id||'',
                 },()=>{
                     this.modal.close();
                 });
@@ -74,17 +74,17 @@ class Log extends React.PureComponent {
                     <div className='mb-1'>
                         <Button className='mr-1' icon='sync-alt' onClick={e=>this.loadTaskLog(this.state.currentPage)}>刷新</Button>
                     </div>
-                    <Table hover={true} select={true} headerTheme='light' data={this.state.data}>
+                    <Table hover={true} select={false} headerTheme='light' data={this.state.data}>
                         <Table.Header text='ID' field='id'/>
                         <Table.Header text='任务ID' field='task_id'/>
                         <Table.Header text='任务名称' field='task_name'/>
                         <Table.Header text='通知回复' field='exec_receive'/>
                         <Table.Header text='通知错误' field='exec_error'/>
                         <Table.Header text='执行时间' field='exec_time' onFormat={value=>{
-                            return moment.unix(value).format("YYYY-MM-DD hh:mm:ss");
+                            return moment.unix(value).format("YYYY-MM-DD HH:mm:ss");
                         }}/>
                         <Table.Header text='创建时间' field='created_date' onFormat={value=>{
-                            return moment.unix(value).format("YYYY-MM-DD hh:mm:ss");
+                            return moment.unix(value).format("YYYY-MM-DD HH:mm:ss");
                         }}/>
                     </Table>
                     <Pagination count={this.state.count} current={this.state.currentPage}

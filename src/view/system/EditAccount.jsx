@@ -93,9 +93,9 @@ class EditAccount extends React.PureComponent {
     render() {
         return (
             <div>
-                <Input label='帐户名' placeholder='帐户名称,只能使用英文和数字' data={this.state.data.account} onChange={this.changeHandler('account')}/>
-                <Input label='用户姓名' placeholder='用户姓名' data={this.state.data.user_name} onChange={this.changeHandler('user_name')}/>
-                <Input label='密码' type='password' placeholder='帐户密码' data={this.state.data.password} onChange={this.changeHandler('password')}/>
+                <Input label='帐户名' placeholder='帐户名称,只能使用英文和数字' validate={{rule:/.+/,text:'帐户名称不能为空'}} data={this.state.data.account} onChange={this.changeHandler('account')}/>
+                <Input label='用户姓名' placeholder='用户姓名' validate={{rule:/.+/,text:'用户姓名不能为空'}} data={this.state.data.user_name} onChange={this.changeHandler('user_name')}/>
+                <Input label='密码' type='password' placeholder='帐户密码' summary='留空就不修改密码' data={this.state.data.password} onChange={this.changeHandler('password')}/>
                 <div>
                     <Checkbox className='ml-1 text-danger' label='禁用' onChange={e=>{
                         let data = this.state.data;
