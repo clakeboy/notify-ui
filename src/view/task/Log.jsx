@@ -11,7 +11,7 @@ import {
     ButtonGroup,
     Table,
     Pagination,
-    Modal
+    CKModal
 } from '@clake/react-bootstrap4';
 import Fetch from "../../common/Fetch";
 class Log extends React.PureComponent {
@@ -91,7 +91,7 @@ class Log extends React.PureComponent {
                                 number={this.pageNumber} showPage={10}
                                 onSelect={page=>this.loadTaskLog(page)}/>
                 </Card>
-                <Modal ref={c=>this.modal=c}/>
+                <CKModal ref={c=>this.modal=c}/>
             </div>
         );
     }

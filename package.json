@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/clakeboy/notify-ui#readme",
   "devDependencies": {
-    "@clake/react-bootstrap4": "^0.1.0",
+    "@clake/react-bootstrap4": "^0.2.3",
     "babel": "^6.23.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",

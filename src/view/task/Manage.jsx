@@ -11,7 +11,7 @@ import {
     ButtonGroup,
     Table,
     Pagination,
-    Modal,
+    CKModal,
     Tabs,
     TabsContent
 } from '@clake/react-bootstrap4';
@@ -183,7 +183,7 @@ class Manage extends React.PureComponent {
                                 number={this.pageNumber} showPage={10}
                                 onSelect={page=>this.loadTask(page)}/>
                 </Card>
-                <Modal ref={c=>this.modal=c}/>
+                <CKModal ref={c=>this.modal=c}/>
             </div>
         );
     }

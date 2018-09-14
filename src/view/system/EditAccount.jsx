@@ -6,7 +6,7 @@ import {
     Input,
     Button,
     Checkbox,
-    Modal,
+    CKModal,
 } from '@clake/react-bootstrap4';
 import Fetch from "../../common/Fetch";
 
@@ -59,7 +59,7 @@ class EditAccount extends React.PureComponent {
     }
 
     save() {
-        console.log(this.state.data);
+        this.modal.loading('加载中...');
         let remote_url = '/serv/account/insert';
         if (this.state.data.id) {
             remote_url = '/serv/account/update';
@@ -106,7 +106,7 @@ class EditAccount extends React.PureComponent {
                     }} checked={this.state.data.disable}/>
                     <Button className='float-right' icon='save' onClick={()=>this.save()}>保存</Button>
                 </div>
-                <Modal ref={c=>this.modal=c}/>
+                <CKModal ref={c=>this.modal=c}/>
             </div>
         );
     }

@@ -9,10 +9,9 @@ import {
     ButtonGroup,
     Table,
     Pagination,
-    Modal
+    CKModal
 } from '@clake/react-bootstrap4';
 import Fetch from "../../common/Fetch";
-import PropTypes from "prop-types";
 import {GetComponent} from "../../common/Funcs";
 import Loader from "../../components/Loader";
 
@@ -125,7 +124,7 @@ class Account extends React.PureComponent {
                                 number={this.pageNumber} showPage={10}
                                 onSelect={page=>this.loadUsers(page)}/>
                 </Card>
-                <Modal ref={c=>this.modal=c}/>
+                <CKModal ref={c=>this.modal=c}/>
             </div>
         );
     }

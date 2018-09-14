@@ -8,7 +8,7 @@ import {
     Select,
     TextArea,
     Checkbox,
-    Modal,
+    CKModal,
     InputGroup
 } from '@clake/react-bootstrap4';
 import Fetch from "../../common/Fetch";
@@ -192,7 +192,7 @@ class EditTask extends React.PureComponent {
                         <Button className='float-right' icon='save' onClick={()=>this.save()}>保存</Button>
                     </div>
                 </div>
-                <Modal ref={c=>this.modal=c}/>
+                <CKModal ref={c=>this.modal=c}/>
             </div>
         );
     }

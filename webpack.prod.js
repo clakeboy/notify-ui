@@ -35,11 +35,11 @@ export default merge(cfg,{
         splitChunks: {
             minSize: 30000,
             minChunks: 2,
-            filename: 'common.js',
             cacheGroups: {
                 commons: {
-                    test:/\.js$/,
-                    chunks: "initial"
+                    test:/\.js(x?)$/,
+                    chunks: "initial",
+                    filename: 'common.js',
                 }
             }
         },
